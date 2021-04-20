@@ -187,11 +187,12 @@ if (heroku.dockerBuildArgs) {
 
     execSync(`git config user.name "Heroku-Deploy"`);
     execSync(`git config user.email "${heroku.email}"`);
-    const status = execSync("git status --porcelain").toString().trim();
+    const status = execSync("git status --porcelain", { maxBuffer: 104857600 }).toString().trim();
     if (status) {
-      execSync(
-        'git add -A && git commit -m "Commited changes from previous actions"'
-      );
+      console.log('Would have commited changes from previous actions: ', status)
+      // execSync(
+      //   'git add -A && git commit -m "Commited changes from previous actions"'
+      // );
     }
 
     // Check if using Docker
