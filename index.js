@@ -96,12 +96,12 @@ const deploy = ({
 
     if (appdir === "") {
       execSync(`git push heroku ${branch}:refs/heads/main ${force}`, {
-        maxBuffer: 1048576000,
+        maxBuffer: 104857600,
       });
     } else {
       execSync(
         `git push ${force} heroku \`git subtree split --prefix=${appdir} ${branch}\`:refs/heads/main`,
-        { maxBuffer: 1048576000 }
+        { maxBuffer: 104857600 }
       );
     }
   }
@@ -203,7 +203,7 @@ if (heroku.dockerBuildArgs) {
 
       // If the Repo clone is shallow, make it unshallow
       if (isShallow === "true\n") {
-        execSync("git fetch --prune --unshallow");
+        execSync("git fetch --prune --unshallow", { maxBuffer: 104857600 });
       }
     }
 
